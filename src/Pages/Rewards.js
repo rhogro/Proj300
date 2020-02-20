@@ -514,17 +514,16 @@ class ProductContainer extends React.Component {
     this.filterbySponsored = this.filterbySponsored.bind(this);
     this.userKey = "";
   }
-
   //getting wishlist, company and sponsored products
-  componentDidMount() {
+  componentWillReceiveProps(nextProps) {
     this.setState({ fetchInProgress: true });
-    this.userKey = this.props.user.key;
+    this.userKey = nextProps.user.key;
     this.subscriptions.push(
       firebaseServices.getWishlist(this.userKey).subscribe(items => {
         this.setState({ wishlist: items });
         this.subscriptions.push(
           firebaseServices
-            .getCompany(this.props.user.companyID)
+            .getCompany(nextProps.user.companyID)
             .subscribe(comp => {
               this.setState({ company: comp });
               this.subscriptions.push(
@@ -682,8 +681,8 @@ export class Rewards extends React.Component {
     this.doOrder = this.doOrder.bind(this);
   }
 
-  componentDidMount() {
-    this.setState({ user: this.props.user });
+  componentWillReceiveProps(nextProps) {
+    this.setState({ user: nextProps.user });
   }
 
   componentDidMount() {

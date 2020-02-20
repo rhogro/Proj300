@@ -38,8 +38,11 @@ class ProductForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    this.setState({ brandID: this.props.brand.key });
+  //when the component receives new props (first time rendering props received will be undefined/null)
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.brand !== this.props.brand) {
+      this.setState({ brandID: nextProps.brand.key });
+    }
   }
 
   //method gets called when the input fields are changed
@@ -352,11 +355,10 @@ class BrandInfo extends Component {
     };
     this.productsSubscr = [];
   }
-
-  componentDidMount() {
+  componentWillReceiveProps(nextProps) {
     this.productsSubscr.push(
       fs
-        .getBrandedProducts("brandID", this.props.brand.key)
+        .getBrandedProducts("brandID", nextProps.brand.key)
         .subscribe(prods => this.setState({ products: prods }))
     );
   }

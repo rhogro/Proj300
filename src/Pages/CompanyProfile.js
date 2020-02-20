@@ -164,14 +164,6 @@ class Panel extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      company: this.props.company,
-      companyDetails: {
-        name: this.props.company.name,
-        address: this.props.company.address,
-        email: this.props.company.email
-      }
-    });
     var currentUser = firebase.auth().currentUser;
     if (currentUser) {
       this.setState({ emailConfirmed: currentUser.emailVerified });
@@ -514,6 +506,19 @@ class Panel extends Component {
     var day = a.getDate();
     var time = `${day} ${month} ${year}`;
     return time;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.company !== nextProps.company) {
+      this.setState({ company: nextProps.company });
+      this.setState({
+        companyDetails: {
+          name: nextProps.company.name,
+          address: nextProps.company.address,
+          email: nextProps.company.email
+        }
+      });
+    }
   }
 
   render() {

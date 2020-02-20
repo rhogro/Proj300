@@ -96,12 +96,14 @@ class BuyButton extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.setState({
-      recipient: this.props.recipient,
-      user: this.props.user,
-      product: this.props.product
-    });
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.recipient !== this.props.recipient) {
+      this.setState({
+        recipient: nextProps.recipient,
+        user: nextProps.user,
+        product: nextProps.product
+      });
+    }
   }
 
   buyProduct() {
@@ -260,7 +262,7 @@ class Products extends React.Component {
     this.subscriptions = [];
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.subscriptions.push(
       firebaseServices.getBrand(this.props.product.brandID).subscribe(brand => {
         this.setState({ brand: brand });
@@ -274,7 +276,9 @@ class Products extends React.Component {
         })
     );
     fetch(
-      `https://stravakudos.herokuapp.com/wishlistAverage?productId=${this.props.product.key}`
+      `https://stravakudos.herokuapp.com/wishlistAverage?productId=${
+        this.props.product.key
+      }`
     )
       .then(res => {
         if (res.status !== 200) {

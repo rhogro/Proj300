@@ -85,6 +85,19 @@ class Panel extends Component {
     this.setState({ fetchInProgress: ct });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.brand !== nextProps.brand) {
+      this.setState({ brand: nextProps.brand });
+      this.setState({
+        brandDetails: {
+          name: nextProps.brand.name,
+          address: nextProps.brand.address,
+          email: nextProps.brand.email
+        }
+      });
+    }
+  }
+
   componentDidMount() {
     var currentUser = firebase.auth().currentUser;
     if (currentUser) {
@@ -92,15 +105,6 @@ class Panel extends Component {
         emailConfirmed: currentUser.emailVerified
       });
     }
-
-    this.setState({ brand: this.props.brand });
-    this.setState({
-      brandDetails: {
-        name: this.props.brand.name,
-        address: this.props.brand.address,
-        email: this.props.brand.email
-      }
-    });
   }
 
   //when user changed data, the object is modified

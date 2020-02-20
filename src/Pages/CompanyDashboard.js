@@ -377,9 +377,8 @@ class CompanyInfo extends Component {
   componentWillUnmount() {
     this.subscriptions.forEach(obs => obs.unsubscribe());
   }
-
   componentWillReceiveProps(nextProps) {
-    if (this.props.company != nextProps.company) {
+    if (this.props.company !== nextProps.company) {
       this.subscriptions.push(
         fs
           .getProducts("companyID", nextProps.company.key)

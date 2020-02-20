@@ -92,7 +92,7 @@ class ProductModal extends React.Component {
     this.subscriptions = [];
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.subscriptions.push(
       firebaseServices.getBrand(this.props.product.brandID).subscribe(brand => {
         this.setState({ brand: brand });
@@ -106,7 +106,9 @@ class ProductModal extends React.Component {
         })
     );
     fetch(
-      `https://stravakudos.herokuapp.com/wishlistAverage?productId=${this.props.product.key}`
+      `https://stravakudos.herokuapp.com/wishlistAverage?productId=${
+        this.props.product.key
+      }`
     )
       .then(res => {
         if (res.status !== 200) {
