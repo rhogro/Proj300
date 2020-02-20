@@ -1,0 +1,67 @@
+.toggle-button {
+  background-color: transparent;
+  color: white;
+}
+
+.pos {
+  position: fixed;
+}
+
+.logoImg:hover {
+  opacity: 0.7;
+}
+
+.backgr {
+  background-color: #01aef0;
+  color: white;
+}
+
+.circle {
+  background-color: #ffffff;
+  border-radius: 50%;
+  color: #01aef0;
+  height: 35px;
+  width: 38px;
+  border: 1px solid #01aef0;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+  cursor: default;
+}
+
+.circle p {
+  font-size: 22px;
+  cursor: default;
+  vertical-align: center;
+}
+
+.navbar-login {
+  width: 220px;
+  padding: 10px;
+  padding-bottom: 0px;
+}
+
+.nav-link {
+  border: 2px solid #ffffff;
+  width: 170px;
+  text-align: center;
+  justify-content: center;
+  font-weight: bold;
+  border-radius: 10px;
+  margin-left: 15px;
+  height: 40px;
+}
+
+.myAccount {
+  border: 2px solid #ffffff;
+  width: 200px;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 10px;
+  height: 40px;
+}
+
+.nav-link:hover {
+  border: 2px solid #01aef0;
+  border-radius: 25px;
+}

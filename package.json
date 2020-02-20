@@ -1,0 +1,65 @@
+{
+  "name": "proj300",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:3001",
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.12",
+    "@fortawesome/free-solid-svg-icons": "^5.6.3",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "bootstrap": "^4.3.1",
+    "cors": "^2.8.5",
+    "es6-promise": "^4.2.5",
+    "firebase": "^7.8.2",
+    "firebase-admin": "^6.5.1",
+    "firebase-auth": "^0.1.2",
+    "firebase-tools": "^7.13.0",
+    "firestore": "^1.1.6",
+    "fitbit-node": "^2.1.0",
+    "font-awesome": "^4.7.0",
+    "history": "^4.7.2",
+    "isomorphic-fetch": "^2.2.1",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.6",
+    "react": "^16.12.0",
+    "react-bootstrap": "^1.0.0-beta.5",
+    "react-bs-notifier": "^5.0.0",
+    "react-burger-menu": "^2.5.4",
+    "react-dom": "^16.6.3",
+    "react-firebase-file-uploader": "^2.4.2",
+    "react-google-recaptcha": "^1.0.5",
+    "react-loading": "^2.0.3",
+    "react-modal": "^3.6.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^2.1.8",
+    "react-sidebar": "^3.0.2",
+    "react-tooltip": "^3.9.2",
+    "react-widgets": "^4.4.7",
+    "strava-v3": "^1.14.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.5.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-pino-logger": "^4.0.0",
+    "node-env-run": "^3.0.2",
+    "nodemon": "^1.18.9",
+    "npm-run-all": "^4.1.5",
+    "pino-colada": "^1.4.4"
+  }
+}
