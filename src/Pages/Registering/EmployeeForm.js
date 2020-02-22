@@ -538,8 +538,8 @@ export class EmployeeForm extends Component {
               <div className="text-white text-center pt-2">
                 <h4 className="text-white">Sign Up as</h4>
                 <p className="pt-2">
-                  You can sign up now on KudosHealth. It's what all fitness
-                  lovers are doing nowadays!
+                  Why don't you sign up now on NumePersonalizatAplicatie. Get
+                  healthy and earn prizes at the same time!
                 </p>
               </div>
               <div className="row pt-4 text-white font-weight-bold">

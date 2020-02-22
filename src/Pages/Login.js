@@ -146,7 +146,7 @@ export class Login extends Component {
                 </button>
               </div>
               <p className="pt-4 text-white text-center">
-                No account yet? Sign up on KudosHealth.
+                No account yet? Sign up on NumePersonalizatAplicatie.
               </p>
               <div className="d-flex justify-content-center ">
                 <Link
