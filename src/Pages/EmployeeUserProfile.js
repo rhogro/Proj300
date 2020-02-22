@@ -20,9 +20,8 @@ class Sidepage extends Component {
       emailConfirmed: false
     };
     this.timeConverter = this.timeConverter.bind(this);
-    this.hasDevice = this.hasDevice.bind(this);
-    this.hasDevice(this.props.user.key);
     this.resendConfirmation = this.resendConfirmation.bind(this);
+    this.subscriptions = [];
   }
 
   componentDidMount() {
@@ -30,6 +29,19 @@ class Sidepage extends Component {
     if (currentUser) {
       this.setState({ emailConfirmed: currentUser.emailVerified });
     }
+    this.subscriptions.push(
+      fs.getDevicebyUser(this.props.user.key).subscribe(device => {
+        if (device.key) {
+          this.setState({ hasDevice: true });
+        } else {
+          this.setState({ hasDevice: false });
+        }
+      })
+    );
+  }
+
+  componentWillUnmount() {
+    this.subscriptions.forEach(obs => obs.unsubscribe());
   }
 
   timeConverter(UNIX_timestamp) {
@@ -53,19 +65,6 @@ class Sidepage extends Component {
     var day = a.getDate();
     var time = `${day} ${month} ${year}`;
     return time;
-  }
-
-  hasDevice(userID) {
-    fs.getDevicebyUser(userID)
-      .then(device => {
-        if (device.key) {
-          this.setState({ hasDevice: true });
-        } else this.setState({ hasDevice: false });
-      })
-      .catch(err => {
-        console.log(err);
-        this.setState({ hasDevice: false });
-      });
   }
 
   resendConfirmation() {
@@ -200,25 +199,12 @@ export class Panel extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.submitEdit = this.submitEdit.bind(this);
-    this.getDevice = this.getDevice.bind(this);
+    this.deleteDevice = this.deleteDevice.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.deleteAccount = this.deleteAccount.bind(this);
-    this.getDevice(this.props.user.key);
-
     this.subscriptions = [];
   }
 
-  getDevice(userID) {
-    this.setState({ fetchInProgress: true });
-    fs.getDevicebyUser(userID)
-      .then(device => {
-        this.setState({ device: device, fetchInProgress: false });
-      })
-      .catch(err => {
-        console.log(err);
-        this.setState({ fetchInProgress: false });
-      });
-  }
   handleLogout = () => {
     firebase
       .auth()
@@ -233,6 +219,11 @@ export class Panel extends Component {
     this.subscriptions.push(
       fs.getCompany(this.props.user.companyID).subscribe(comp => {
         this.setState({ company: comp, fetchInProgress: false });
+      })
+    );
+    this.subscriptions.push(
+      fs.getDevicebyUser(this.props.user.key).subscribe(device => {
+        this.setState({ device: device, fetchInProgress: false });
       })
     );
   }
@@ -464,6 +455,11 @@ export class Panel extends Component {
       });
   }
 
+  deleteDevice() {
+    fs.deleteDevice(this.state.device.key);
+    this.setState({ device: {} });
+  }
+
   render() {
     const user = this.props.user;
     const userID = user.key;
@@ -582,25 +578,37 @@ export class Panel extends Component {
                     <h3 className="p-3 text-white text-center">
                       Connect your Device
                     </h3>
-                    <h6 className="p-3 text-white text-center">
-                      Please connect you device before starting any activity.
-                    </h6>
                     {device.key ? (
-                      `Connected with ${deviceApi}`
+                      <div>
+                        Connected with {deviceApi}
+                        <br />
+                        <button
+                          className="btn btn-sm text-white btn-danger m-3"
+                          onClick={this.deleteDevice}
+                        >
+                          Disconnect device{" "}
+                        </button>
+                      </div>
                     ) : (
-                      <div className="d-flex justify-content-center">
-                        <a
-                          href={`https://stravakudos.herokuapp.com/strava/authorize?userId=${userID}`}
-                          className="btn btn-sm text-white btn-warning col-sm-4 m-3"
-                        >
-                          Strava
-                        </a>
-                        <a
-                          href={`https://stravakudos.herokuapp.com/fitbit/authorize?userId=${userID}`}
-                          className="btn btn-sm text-white btn-warning col-sm-4 m-3"
-                        >
-                          Fitbit
-                        </a>
+                      <div>
+                        <h6 className="p-3 text-white text-center">
+                          Please connect you device before starting any
+                          activity.
+                        </h6>
+                        <div className="d-flex justify-content-center">
+                          <a
+                            href={`https://stravakudos.herokuapp.com/strava/authorize?userId=${userID}`}
+                            className="btn btn-sm text-white btn-warning col-sm-4 m-3"
+                          >
+                            Strava
+                          </a>
+                          <a
+                            href={`https://stravakudos.herokuapp.com/fitbit/authorize?userId=${userID}`}
+                            className="btn btn-sm text-white btn-warning col-sm-4 m-3"
+                          >
+                            Fitbit
+                          </a>
+                        </div>
                       </div>
                     )}
                   </div>

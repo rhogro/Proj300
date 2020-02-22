@@ -551,7 +551,7 @@ export default class FirebaseServices {
 
   //method for getting a device by the userid (any user can have only one device)
   getDevicebyUser = userID => {
-    return new Promise((resolve, reject) => {
+    return new Observable(observer => {
       if (userID) {
         this.connectedDevicesCollection
           .where("userID", "==", userID)
@@ -577,10 +577,10 @@ export default class FirebaseServices {
                 userID
               };
             });
-            resolve(device);
+            observer.next(device);
           });
       } else {
-        reject(new Error("No userID to search with"));
+        console.log("No userID to search with");
       }
     });
   };
@@ -613,6 +613,16 @@ export default class FirebaseServices {
         observer.next(devices);
       });
     });
+  };
+
+  deleteDevice = deviceID => {
+    if (deviceID) {
+      this.connectedDevicesCollection
+        .where(firebase.firestore.FieldPath.documentId(), "==", deviceID)
+        .onSnapshot(querySnapshot => {
+          querySnapshot.forEach(doc => doc.ref.delete());
+        });
+    }
   };
 
   //method for getting a brand using brandID
