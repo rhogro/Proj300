@@ -19,7 +19,7 @@ class ProductProgressbar extends React.Component {
     const label = this.props.label;
     const progressStyle = {
       width: percent + "%",
-      color: "black"
+      color: "black",
     };
     var progressClass = "progress-bar ";
     if (label === "yourProgress") {
@@ -92,7 +92,7 @@ class BuyButton extends React.Component {
       disabled: false,
       recipient: this.props.recipient,
       user: this.props.user,
-      product: this.props.product
+      product: this.props.product,
     };
   }
 
@@ -101,7 +101,7 @@ class BuyButton extends React.Component {
       this.setState({
         recipient: nextProps.recipient,
         user: nextProps.user,
-        product: nextProps.product
+        product: nextProps.product,
       });
     }
   }
@@ -110,7 +110,7 @@ class BuyButton extends React.Component {
     var data = {
       userID: this.state.user.key,
       productID: this.state.product.key,
-      recipient: this.state.recipient
+      recipient: this.state.recipient,
     };
     //console.log("userID: " + this.state.user.key);
     //console.log("productID " + this.state.product.key);
@@ -123,14 +123,14 @@ class BuyButton extends React.Component {
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
       credentials: "same-origin", // include, *same-origin, omit
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
         // "Content-Type": "application/x-www-form-urlencoded",
       },
       redirect: "follow", // manual, *follow, error
       referrer: "no-referrer", // no-referrer, *client
-      body: JSON.stringify(data) // body data type must match "Content-Type" header
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
     })
-      .then(response => {
+      .then((response) => {
         console.log(response.status);
         switch (response.status) {
           case 460:
@@ -184,7 +184,7 @@ class BuyButton extends React.Component {
             break;
         }
       }) // parses response to JSON
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
   render() {
     var disabled = this.setState.disabled;
@@ -264,39 +264,39 @@ class Products extends React.Component {
 
   componentWillMount() {
     this.subscriptions.push(
-      firebaseServices.getBrand(this.props.product.brandID).subscribe(brand => {
-        this.setState({ brand: brand });
-      })
+      firebaseServices
+        .getBrand(this.props.product.brandID)
+        .subscribe((brand) => {
+          this.setState({ brand: brand });
+        })
     );
     this.subscriptions.push(
       firebaseServices
         .getCompany(this.props.product.companyID)
-        .subscribe(company => {
+        .subscribe((company) => {
           this.setState({ company: company });
         })
     );
     fetch(
-      `https://stravakudos.herokuapp.com/wishlistAverage?productId=${
-        this.props.product.key
-      }`
+      `https://stravakudos.herokuapp.com/wishlistAverage?productId=${this.props.product.key}`
     )
-      .then(res => {
+      .then((res) => {
         if (res.status !== 200) {
           console.log("Could not fetch average of competitors");
           return;
         }
         res
           .json()
-          .then(data => {
+          .then((data) => {
             this.setState({ avgOfCompetitors: data });
           })
-          .catch(err => console.log(err));
+          .catch((err) => console.log(err));
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   componentWillUnmount() {
-    this.subscriptions.forEach(obs => obs.unsubscribe());
+    this.subscriptions.forEach((obs) => obs.unsubscribe());
   }
 
   showAlert(type, message, headline) {
@@ -306,7 +306,7 @@ class Products extends React.Component {
   render() {
     const user = this.props.user;
     const product = this.props.product;
-    const gainedCoins = product.gainedCoins.toFixed(2); // only for getting products with getWishListItems method
+    const gainedCoins = parseFloat(product.gainedCoins).toFixed(2); // only for getting products with getWishListItems method
     const sponsored = product.sponsored;
     const brand = this.state.brand;
     const productName = product.name;
@@ -323,7 +323,7 @@ class Products extends React.Component {
     const priceToUnlock = (price * tresholdPercentage).toFixed(2);
     var recipient = {
       email: "",
-      name: ""
+      name: "",
     };
     const avgOfCompetitors = this.state.avgOfCompetitors;
     if (sponsored) {
@@ -347,7 +347,7 @@ class Products extends React.Component {
                   <p
                     style={{
                       color: "#FFCB2D",
-                      textShadow: "2px 2px 4px #000000"
+                      textShadow: "2px 2px 4px #000000",
                     }}
                   >
                     {price} Coins
@@ -462,7 +462,7 @@ export class Wishlist extends React.Component {
     this.state = {
       products: [],
       user: props.user,
-      fetchInProgress: true
+      fetchInProgress: true,
     };
     this.showAlert = this.showAlert.bind(this);
   }
@@ -471,14 +471,14 @@ export class Wishlist extends React.Component {
     this.subscriptions.push(
       firebaseServices
         .getWishListItems(this.state.user.key)
-        .subscribe(prod =>
+        .subscribe((prod) =>
           this.setState({ products: prod, fetchInProgress: false })
         )
     );
   }
 
   componentWillUnmount() {
-    this.subscriptions.forEach(obs => obs.unsubscribe());
+    this.subscriptions.forEach((obs) => obs.unsubscribe());
   }
 
   showAlert(type, message, headline) {
@@ -489,7 +489,7 @@ export class Wishlist extends React.Component {
     const user = this.state.user;
     const products = this.state.products;
     const fetchInProgress = this.state.fetchInProgress;
-    const listProd = products.map(product => (
+    const listProd = products.map((product) => (
       <Products
         product={product}
         key={product.key}

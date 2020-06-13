@@ -16,8 +16,8 @@ const customStyles = {
     right: "30%",
     bottom: "auto",
     marginRight: "-50%",
-    transform: "translate(-50%, -50%)"
-  }
+    transform: "translate(-50%, -50%)",
+  },
 };
 
 //component for representing a row
@@ -49,8 +49,8 @@ class TableRowProducts extends Component {
         description: row.description,
         companyID: row.companyID,
         picture: row.picture,
-        category: row.category
-      }
+        category: row.category,
+      },
     };
     //binding methods (for using "this.")
     this.openModal = this.openModal.bind(this);
@@ -259,7 +259,7 @@ class ProductsTable extends Component {
     //maps all the products from the array that comes as props
     //foreach element in the array, the TableRow component is called and rendered
     //with the data for that product
-    var row = this.props.data.map(row => (
+    var row = this.props.data.map((row) => (
       <TableRowProducts key={row.key} row={row} />
     ));
 
@@ -296,8 +296,8 @@ class TableRowUsers extends Component {
         firstName: row.firstName,
         lastName: row.lastName,
         points: row.points,
-        role: row.role
-      }
+        role: row.role,
+      },
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -485,7 +485,7 @@ class TableRowUsers extends Component {
 
 class UsersTable extends Component {
   render() {
-    var row = this.props.data.map(row => (
+    var row = this.props.data.map((row) => (
       <TableRowUsers key={row.key} row={row} />
     ));
 
@@ -521,8 +521,8 @@ class TableRowBrands extends Component {
         description: row.description,
         email: row.email,
         name: row.name,
-        picture: row.picture
-      }
+        picture: row.picture,
+      },
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -683,7 +683,7 @@ class TableRowBrands extends Component {
 
 class BrandsTable extends Component {
   render() {
-    var row = this.props.data.map(row => (
+    var row = this.props.data.map((row) => (
       <TableRowBrands key={row.key} row={row} />
     ));
 
@@ -706,7 +706,7 @@ class BrandsTable extends Component {
 
 class CompaniesTable extends Component {
   render() {
-    var row = this.props.data.map(row => (
+    var row = this.props.data.map((row) => (
       <TableRowCompanies key={row.key} row={row} />
     ));
 
@@ -738,8 +738,8 @@ class TableRowCompanies extends Component {
         adminUserID: row.adminUserID,
         email: row.email,
         name: row.name,
-        picture: row.picture
-      }
+        picture: row.picture,
+      },
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -886,7 +886,7 @@ class TableRowCompanies extends Component {
 
 class DevicesTable extends Component {
   render() {
-    var row = this.props.data.map(row => (
+    var row = this.props.data.map((row) => (
       <TableRowDevices key={row.key} row={row} />
     ));
 
@@ -920,8 +920,8 @@ class TableRowDevices extends Component {
         apiClientID: row.apiClientID,
         distance: row.distance,
         refreshToken: row.refreshToken,
-        userID: row.userID
-      }
+        userID: row.userID,
+      },
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -1060,7 +1060,7 @@ class WishlistsTable extends Component {
     super(props);
   }
   render() {
-    var row = this.props.data.map(row => (
+    var row = this.props.data.map((row) => (
       <TableRowWishlists key={row.key} row={row} />
     ));
 
@@ -1090,8 +1090,8 @@ class TableRowWishlists extends Component {
       wishlist: {
         userID: row.userID,
         productID: row.productID,
-        gainedCoins: row.gainedCoins
-      }
+        gainedCoins: row.gainedCoins,
+      },
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -1235,7 +1235,7 @@ class Tables extends Component {
           className="navbar navbar-expand-sm bg-dark navbar-dark fixed-top"
           style={{ position: "relative", marginBottom: "50px" }}
         >
-          <ul className="navbar-nav">
+          <ul className="navbar-nav" style={{ "margin-left": "-22px" }}>
             <li className="nav-item">
               <a className="nav-link" href="#products">
                 Products
@@ -1269,22 +1269,34 @@ class Tables extends Component {
           </ul>
         </nav>
 
-        <h2 id="products">Products</h2>
+        <h2 id="products" style={{ color: "white" }}>
+          Products
+        </h2>
         <ProductsTable data={products} />
         <br />
-        <h2 id="users">Users</h2>
+        <h2 id="users" style={{ color: "white" }}>
+          Users
+        </h2>
         <UsersTable data={users} />
         <br />
-        <h2 id="brands">Brands</h2>
+        <h2 id="brands" style={{ color: "white" }}>
+          Brands
+        </h2>
         <BrandsTable data={brands} />
         <br />
-        <h2 id="companies">Companies</h2>
+        <h2 id="companies" style={{ color: "white" }}>
+          Companies
+        </h2>
         <CompaniesTable data={companies} />
         <br />
-        <h2 id="devices">Devices</h2>
+        <h2 id="devices" style={{ color: "white" }}>
+          Devices
+        </h2>
         <DevicesTable data={devices} />
         <br />
-        <h2 id="wishlists">Wishlists</h2>
+        <h2 id="wishlists" style={{ color: "white" }}>
+          Wishlists
+        </h2>
         <WishlistsTable data={wishlists} />
       </div>
     );
@@ -1301,7 +1313,7 @@ export class Admin extends Component {
       companies: [],
       devices: [],
       wishlists: [],
-      fetchInProgress: true
+      fetchInProgress: true,
     };
     this.subscriptions = [];
   }
@@ -1312,32 +1324,32 @@ export class Admin extends Component {
     //there is a loading animation until all the data is fetched from the database
     this.setState({ fetchInProgress: true });
     this.subscriptions.push(
-      firebaseServices.getAllProducts().subscribe(products => {
+      firebaseServices.getAllProducts().subscribe((products) => {
         this.setState({ products: products, fetchInProgress: false });
       })
     );
     this.subscriptions.push(
-      firebaseServices.getAllUsers().subscribe(users => {
+      firebaseServices.getAllUsers().subscribe((users) => {
         this.setState({ users: users, fetchInProgress: false });
       })
     );
     this.subscriptions.push(
-      firebaseServices.getBrands().subscribe(brands => {
+      firebaseServices.getBrands().subscribe((brands) => {
         this.setState({ brands: brands, fetchInProgress: false });
       })
     );
     this.subscriptions.push(
-      firebaseServices.getCompanies().subscribe(companies => {
+      firebaseServices.getCompanies().subscribe((companies) => {
         this.setState({ companies: companies, fetchInProgress: false });
       })
     );
     this.subscriptions.push(
-      firebaseServices.getDevices().subscribe(devices => {
+      firebaseServices.getDevices().subscribe((devices) => {
         this.setState({ devices: devices, fetchInProgress: false });
       })
     );
     this.subscriptions.push(
-      firebaseServices.getAllWishlists().subscribe(wishlists => {
+      firebaseServices.getAllWishlists().subscribe((wishlists) => {
         this.setState({ wishlists: wishlists, fetchInProgress: false });
       })
     );
@@ -1345,7 +1357,7 @@ export class Admin extends Component {
 
   componentWillUnmount() {
     //upon component unmounting, each subscription gets unsubscribed
-    this.subscriptions.forEach(obs => obs.unsubscribe());
+    this.subscriptions.forEach((obs) => obs.unsubscribe());
   }
 
   render() {

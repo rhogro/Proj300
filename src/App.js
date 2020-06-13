@@ -15,7 +15,7 @@ import {
   faHome,
   faBars,
   faGift,
-  faTrash
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import * as serviceWorker from "./serviceWorker";
 import FirebaseServices from "./firebase/services";
@@ -45,12 +45,14 @@ library.add(faHome, faBars, faGift, faTrash);
 const PrivateRoute = ({ component: Component, role, ...rest }) => (
   <Route
     {...rest}
-    render={props =>
+    render={(props) =>
       role === "employee" ? (
         <Component {...props} />
       ) : role === "companyAdmin" ? (
         <Component {...props} />
       ) : role === "brandAdmin" ? (
+        <Component {...props} />
+      ) : role === "admin" ? (
         <Component {...props} />
       ) : (
         <Redirect to="/" />
@@ -73,7 +75,7 @@ class App extends Component {
       alertMessage: "",
       alertType: "",
       alertVisible: false,
-      alertHeadline: ""
+      alertHeadline: "",
     };
     this.showAlert = this.showAlert.bind(this);
     this.AlertOnDismiss = this.AlertOnDismiss.bind(this);
@@ -82,15 +84,15 @@ class App extends Component {
 
   componentDidMount() {
     this.setState({ fetchInProgress: true });
-    firebase.auth().onAuthStateChanged(authenticated => {
+    firebase.auth().onAuthStateChanged((authenticated) => {
       authenticated
         ? this.setState(() => ({
             authenticated: true,
-            fetchInProgress: false
+            fetchInProgress: false,
           }))
         : this.setState(() => ({
             authenticated: false,
-            fetchInProgress: false
+            fetchInProgress: false,
           }));
     });
 
@@ -98,14 +100,14 @@ class App extends Component {
       this.setState({ fetchInProgress: true });
       if (this.state.authenticated) {
         this.subscriptions.push(
-          fs.getConnectedUser().subscribe(user => {
+          fs.getConnectedUser().subscribe((user) => {
             //console.log(user);
             this.setState({
               user: user,
               userRole: user.role,
               userEmail: user.email,
               coins: user.coins,
-              fetchInProgress: false
+              fetchInProgress: false,
             });
           })
         );
@@ -116,12 +118,12 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-    this.subscriptions.forEach(subs => subs.unsubscribe());
+    this.subscriptions.forEach((subs) => subs.unsubscribe());
   }
 
   AlertOnDismiss() {
     this.setState({
-      alertVisible: false
+      alertVisible: false,
     });
   }
 
@@ -136,7 +138,7 @@ class App extends Component {
       alertType: type,
       alertMessage: message,
       alertVisible: true,
-      alertHeadline: headline
+      alertHeadline: headline,
     });
   }
 
@@ -151,23 +153,23 @@ class App extends Component {
         id: 1,
         type: this.state.alertType,
         message: this.state.alertMessage,
-        headline: this.state.alertHeadline
-      }
+        headline: this.state.alertHeadline,
+      },
     ];
 
-    const MyRewards = props => {
+    const MyRewards = (props) => {
       return <Rewards user={this.state.user} />;
     };
 
-    const Register = props => {
+    const Register = (props) => {
       return <EmployeeForm showAlert={this.showAlert} history={history} />;
     };
 
-    const Landing = props => {
+    const Landing = (props) => {
       return <Home role={this.state.userRole} />;
     };
 
-    const MyProfile = props => {
+    const MyProfile = (props) => {
       return (
         <EmployeeUserProfile
           user={this.state.user}
@@ -177,7 +179,7 @@ class App extends Component {
       );
     };
 
-    const MyCompanyProfile = props => {
+    const MyCompanyProfile = (props) => {
       return (
         <CompanyProfile
           user={this.state.user}
@@ -187,7 +189,7 @@ class App extends Component {
       );
     };
 
-    const MyBrandProfile = props => {
+    const MyBrandProfile = (props) => {
       return (
         <BrandProfile
           user={this.state.user}
@@ -197,20 +199,20 @@ class App extends Component {
       );
     };
 
-    const MyBrand = props => {
+    const MyBrand = (props) => {
       return <Brand user={this.state.user} {...props} />;
     };
-    const MyBrands = props => {
+    const MyBrands = (props) => {
       return <Brands {...props} />;
     };
 
-    const MyCompanyDashboard = props => {
+    const MyCompanyDashboard = (props) => {
       return (
         <CompanyDashboard companyID={this.state.user.companyID} {...props} />
       );
     };
 
-    const MyBrandDashboard = props => {
+    const MyBrandDashboard = (props) => {
       return (
         <BrandDashboard
           brandID={this.state.user.brandID}
@@ -219,7 +221,7 @@ class App extends Component {
       );
     };
 
-    const MyWishlist = props => {
+    const MyWishlist = (props) => {
       return <Wishlist user={this.state.user} showAlert={this.showAlert} />;
     };
 

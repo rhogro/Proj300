@@ -14,13 +14,17 @@ export class Home extends Component {
     this.choose(this.props.role);
   }
 
-  choose = role => {
+  choose = (role) => {
     if (role === "employee") {
       return "/profile";
     } else if (role === "companyAdmin") {
       return "/companyProfile";
     } else if (role === "brandAdmin") {
       return "/brandProfile";
+    } else if (role === "admin") {
+      return "/admin";
+    } else {
+      return "/";
     }
   };
 
